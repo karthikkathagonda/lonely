@@ -4,6 +4,14 @@ if (!isset($_SESSION["user"])) {
     header("Location: login.php");
     exit();
 }
+
+// Show popup only once per session
+if (!isset($_SESSION["popup_shown"])) {
+    $_SESSION["popup_shown"] = true;
+    $showPopup = true;
+} else {
+    $showPopup = false;
+}
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +33,9 @@ if (!isset($_SESSION["user"])) {
             color: white;
             position: fixed;
             padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .sidebar a {
             color: white;
@@ -50,7 +61,7 @@ if (!isset($_SESSION["user"])) {
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
         .popup {
-            display: block;
+            display: <?php echo $showPopup ? 'block' : 'none'; ?>;
             position: fixed;
             top: 50%;
             left: 50%;
@@ -71,9 +82,14 @@ if (!isset($_SESSION["user"])) {
 
     <!-- Sidebar Menu -->
     <div class="sidebar">
-        <h4 class="text-center">LonelyChat</h4>
-        <a href="#">Profile</a>
-        <a href="#">Friends</a>
+        <div>
+            <h4 class="text-center">LonelyChat</h4>
+            <a href="#">Profile</a>
+            <a href="#">Friends</a>
+        </div>
+        <div>
+            <a href="logout.php" class="btn btn-danger w-100">Logout</a>
+        </div>
     </div>
 
     <!-- Main Content -->
@@ -116,7 +132,7 @@ if (!isset($_SESSION["user"])) {
         let selectedInterest = "";
 
         function closePopup() {
-            document.getElementById("popupMessage").classList.add("hidden");
+            document.getElementById("popupMessage").style.display = "none";
         }
 
         function selectInterest(interest) {
@@ -129,6 +145,9 @@ if (!isset($_SESSION["user"])) {
                 window.location.href = "video_chat.php?interest=" + encodeURIComponent(selectedInterest);
             }
         });
+
+        // Ensure the Continue button properly hides the popup
+        document.querySelector(".btn-secondary").addEventListener("click", closePopup);
     </script>
 
 </body>
