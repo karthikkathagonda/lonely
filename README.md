@@ -17,18 +17,6 @@ UI/UX Enhancements (CSS & animations)
 
 Secure and Optimized Code
 
-**Folder Structure**
-
-/your_project_folder
-|-- db.php               # Database connection
-|-- register.php         # User Registration
-|-- login.php            # User Login
-|-- logout.php           # User Logout
-|-- dashboard.php        # User Dashboard
-|-- video_chat.php       # WebRTC Video Chat
-|-- assets/              # CSS, JS, Images
-|-- README.md            # Project Documentation
-
 **Installation Guide**
 
 1. Clone the Repository
